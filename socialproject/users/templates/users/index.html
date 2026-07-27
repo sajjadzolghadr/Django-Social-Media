@@ -1,0 +1,59 @@
+{% extends "users/base.html" %}
+
+{% block title %}
+Home
+{% endblock %}
+
+{% block content %}
+
+<div class="card shadow">
+
+    <div class="card-body text-center">
+
+        <h2 class="mb-3">
+            Welcome to Social Media
+        </h2>
+
+        <p class="text-muted">
+            Connect with your friends and share your moments.
+        </p>
+
+        <hr>
+
+        <div class="d-grid gap-2 col-md-4 mx-auto">
+
+            <a href="#" class="btn btn-primary">
+                Create Post
+            </a>
+
+            <a href="#" class="btn btn-outline-secondary">
+                View Profile
+            </a>
+
+        </div>
+
+    </div>
+
+</div>
+
+<div class="mt-5">
+
+    <h4>Recent Posts</h4>
+
+    <div class="card mt-3">
+
+        <div class="card-body">
+
+            <h5>John Doe</h5>
+
+            <p class="mb-0">
+                This is an example post...
+            </p>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

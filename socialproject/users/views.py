@@ -2,6 +2,7 @@ from django.shortcuts import render
 from .forms import LoginForm
 from django.http import HttpResponse
 from django.contrib.auth import authenticate,login,logout
+from django.contrib.auth.decorators import login_required
 # Create your views here.
 def user_login(request):
     if request.method == "POST":
@@ -21,3 +22,6 @@ def user_login(request):
 def user_logout(request):
     logout(request)
     return render(request, 'users/logout.html')
+@login_required(login_url='login')
+def index(request):
+    return render(request, 'users/index.html')
