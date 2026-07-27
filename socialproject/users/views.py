@@ -19,9 +19,6 @@ def user_login(request):
         form = LoginForm()
     return render(request, 'users/login.html', {'form': form})
 
-def user_logout(request):
-    logout(request)
-    return render(request, 'users/logout.html')
 @login_required(login_url='login')
 def index(request):
     return render(request, 'users/index.html')
