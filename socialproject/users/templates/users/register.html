@@ -1,7 +1,7 @@
 {% extends "users/base.html" %}
 
 {% block title %}
-Login
+Register
 {% endblock %}
 
 {% block content %}
@@ -9,12 +9,12 @@ Login
 <div class="container mt-5">
     <div class="row justify-content-center">
 
-        <div class="col-md-5">
+        <div class="col-md-6">
 
             <div class="card shadow">
 
                 <div class="card-header bg-primary text-white">
-                    <h4 class="mb-0">Login</h4>
+                    <h4 class="mb-0">Create Account</h4>
                 </div>
 
                 <div class="card-body">
@@ -22,40 +22,41 @@ Login
                     <form method="POST">
                         {% csrf_token %}
 
-                        {% for field in form %}
+                        {% for field in user_form %}
                             <div class="mb-3">
-                                <label class="form-label">{{ field.label }}</label>
+
+                                <label class="form-label">
+                                    {{ field.label }}
+                                </label>
+
                                 {{ field }}
+
+                                {% if field.help_text %}
+                                    <small class="text-muted d-block">
+                                        {{ field.help_text }}
+                                    </small>
+                                {% endif %}
 
                                 {% if field.errors %}
                                     <div class="text-danger small">
                                         {{ field.errors }}
                                     </div>
                                 {% endif %}
+
                             </div>
                         {% endfor %}
 
                         <button type="submit" class="btn btn-primary w-100">
-                            Login
+                            Register
                         </button>
+
                     </form>
 
                     <div class="text-center mt-3">
-
-                         <a href="{% url 'password_reset' %}" class="text-decoration-none">
-                                  Forgot Password?
-                         </a>
-
-                        <hr>
-
-                        <span class="text-muted">
-                              Don't have an account?
-                        </span>
-
-                        <a href="{% url 'register' %}" class="text-decoration-none fw-bold">
-                            Sign Up
+                        Already have an account?
+                        <a href="{% url 'login' %}">
+                            Login
                         </a>
-
                     </div>
 
                 </div>
