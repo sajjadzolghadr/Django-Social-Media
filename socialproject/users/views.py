@@ -2,11 +2,12 @@ from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
 from .froms import UserRegistrationForm,UserEditForm,ProfileEditForm
 from .models import Profile
+from posts.models import Post
 # Create your views here.
 @login_required(login_url='login')
 def index(request):
-    return render(request, 'users/index.html')
-
+    posts = Post.objects.select_related('user').order_by('-created')
+    return render(request, "users/index.html", {"posts": posts})
 def register(request):
     if request.method == 'POST':
         user_form = UserRegistrationForm(request.POST)
