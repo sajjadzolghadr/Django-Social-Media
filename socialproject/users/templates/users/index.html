@@ -1,19 +1,13 @@
 {% extends "users/base.html" %}
-
 {% block title %}
 Home
 {% endblock %}
-
 {% block content %}
-
 <div class="card shadow">
-
     <div class="card-body text-center">
-
         <h2 class="mb-3">
             Welcome to Social Media
         </h2>
-
         <p class="text-muted">
             Connect with your friends and share your moments.
         </p>
@@ -22,11 +16,11 @@ Home
 
         <div class="d-grid gap-2 col-md-4 mx-auto">
 
-            <a href="#" class="btn btn-primary">
+            <a href="{% url 'create' %}" class="btn btn-primary">
                 Create Post
             </a>
 
-            <a href="#" class="btn btn-outline-secondary">
+            <a href="{% url 'edit' %}" class="btn btn-outline-secondary">
                 View Profile
             </a>
 
@@ -41,16 +35,6 @@ Home
     <h4>Recent Posts</h4>
 
     <div class="card mt-3">
-
-        <div class="card-body">
-
-            <h5>John Doe</h5>
-
-            <p class="mb-0">
-                This is an example post...
-            </p>
-
-        </div>
 
     </div>
 
