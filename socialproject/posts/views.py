@@ -1,6 +1,6 @@
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, get_object_or_404, redirect
-from .forms import PostForm
+from .forms import PostForm , CommentForm
 from .models import Post
 
 
@@ -17,7 +17,7 @@ def post_create(request):
         form = PostForm(data=request.GET)
     return render(request, 'posts/create.html', {'form': form})
 
-
+@login_required(login_url='login')
 def like_post(request, post_id):
     post = get_object_or_404(Post, id=post_id)
 
@@ -28,3 +28,19 @@ def like_post(request, post_id):
             post.liked_by.add(request.user)
 
     return redirect("index")
+
+
+@login_required (login_url='login')
+def add_comment(request, post_id):
+    post = get_object_or_404(Post, id=post_id)
+
+    if request.method == 'POST':
+        form = CommentForm(request.POST)
+        if form.is_valid():
+            comment = form.save(commit=False)
+            comment.post = post
+            comment.user = request.user
+            comment.save()
+            return redirect('index')
+
+    return redirect('index')
