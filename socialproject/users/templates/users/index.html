@@ -67,11 +67,32 @@ Home
             {% endif %}
             <div class="px-3 pt-3 d-flex justify-content-between">
 
+    <div class="px-3 py-2 d-flex justify-content-between">
+
     <div>
-        <i class="bi bi-heart fs-4 me-3"></i>
+
+        <form action="{% url 'like' post.id  %}" method="post" class="d-inline">
+            {% csrf_token %}
+            <input type="hidden" name="post_id" value="{{ post.id }}">
+
+            <button type="submit" class="btn p-0 border-0 bg-transparent">
+
+                {% if request.user in post.liked_by.all %}
+                    <i class="bi bi-heart-fill text-danger fs-4 me-3"></i>
+                {% else %}
+                    <i class="bi bi-heart fs-4 me-3"></i>
+                {% endif %}
+
+            </button>
+        </form>
+
         <i class="bi bi-chat fs-4 me-3"></i>
         <i class="bi bi-send fs-4"></i>
+
     </div>
+
+
+</div>
 
     <i class="bi bi-bookmark fs-4"></i>
 
@@ -86,6 +107,9 @@ Home
 <p class="mb-1">
     <strong>{{ post.user.username }}</strong>
     {{ post.caption }}
+</p>
+<p class="fw-bold mb-1">
+        {{ post.liked_by.count }} Likes
 </p>
 
 <small class="text-muted">
