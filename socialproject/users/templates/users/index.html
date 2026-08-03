@@ -43,37 +43,39 @@
 
         <div class="px-3 py-2">
 
-            <div class="d-flex align-items-center gap-4">
+          <div class="d-flex align-items-center justify-content-between gap-4">
 
-                <form action="{% url 'like' post.id %}" method="post" class="d-flex align-items-center m-0">
-                    {% csrf_token %}
-                    <input type="hidden" name="post_id" value="{{ post.id }}">
+    <form action="{% url 'like' post.id %}" method="post" class="d-flex align-items-center m-0">
+        {% csrf_token %}
+        <input type="hidden" name="post_id" value="{{ post.id }}">
+        <button class="btn p-0 border-0 bg-transparent me-1">
+            {% if request.user in post.liked_by.all %}
+                <i class="bi bi-heart-fill text-danger fs-4"></i>
+            {% else %}
+                <i class="bi bi-heart fs-4"></i>
+            {% endif %}
+        </button>
+        <span>{{ post.liked_by.count }}</span>
+    </form>
+    <button class="btn p-0 border-0 bg-transparent d-flex align-items-center"
+            onclick="toggleComment('{{ post.id }}')">
+        <i class="bi bi-chat fs-4 me-1"></i>
+        <span>{{ post.comments.count }}</span>
+    </button>
+    <form action="{% if post.id in saved_post_ids %}{% url 'unsave_post' post.id %}{% else %}{% url 'save_post' post.id %}{% endif %}"
+          method="post" class="m-0">
+        {% csrf_token %}
+        <button type="submit" class="btn p-0 border-0 bg-transparent"
+                title="{% if post.id in saved_post_ids %}Unsave{% else %}Save{% endif %}">
+            {% if post.id in saved_post_ids %}
+                <i class="bi bi-bookmark-fill text-primary fs-4"></i>
+            {% else %}
+                <i class="bi bi-bookmark fs-4"></i>
+            {% endif %}
+        </button>
+    </form>
 
-                    <button class="btn p-0 border-0 bg-transparent me-1">
-
-                        {% if request.user in post.liked_by.all %}
-                            <i class="bi bi-heart-fill text-danger fs-4"></i>
-                        {% else %}
-                            <i class="bi bi-heart fs-4"></i>
-                        {% endif %}
-
-                    </button>
-
-                    <span>{{ post.liked_by.count }}</span>
-
-                </form>
-
-                <button class="btn p-0 border-0 bg-transparent d-flex align-items-center"
-                        onclick="toggleComment('{{ post.id }}')">
-
-                    <i class="bi bi-chat fs-4 me-1"></i>
-
-                    <span>{{ post.comments.count }}</span>
-
-                </button>
-
-            </div>
-
+</div>
         </div>
 
         <div class="card-body">

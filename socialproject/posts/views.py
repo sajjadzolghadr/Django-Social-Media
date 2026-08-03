@@ -1,7 +1,7 @@
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, get_object_or_404, redirect
 from .forms import PostForm , CommentForm
-from .models import Post
+from .models import Post ,SavedPost
 
 
 # Create your views here.
@@ -43,4 +43,16 @@ def add_comment(request, post_id):
             comment.save()
             return redirect('index')
 
+    return redirect('index')
+
+@login_required(login_url='login')
+def save_post(request, post_id):
+    post = get_object_or_404(Post, id=post_id)
+    SavedPost.objects.get_or_create(user=request.user, post=post)
+    return redirect('index')
+
+@login_required(login_url='login')
+def unsave_post(request, post_id):
+    post = get_object_or_404(Post, id=post_id)
+    SavedPost.objects.filter(user=request.user, post=post).delete()
     return redirect('index')
